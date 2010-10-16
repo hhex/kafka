@@ -1,6 +1,6 @@
 (ns kafka.panel
   (:use [clojure.string :only (split-lines)])
-  (:import (javax.swing JPanel JEditorPane JScrollPane UIManager JButton)
+  (:import (javax.swing JPanel JEditorPane JScrollPane UIManager JButton JOptionPane)
            (java.awt Dimension)
            (java.awt.event ActionListener))
   (:gen-class
@@ -15,26 +15,32 @@
 
 ;;;; Code
 
-(defn next-say []
-  (nth kkraus (rand-int (count kkraus))))
-
-(def next-saying-action (proxy [ActionListener] []
-           (actionPerformed [event] (next-say))))
-
+(defn ^{:doc "Returns a random saying as a String"}
+  next-say []
+  (str (nth kkraus (rand-int (count kkraus)))))
 
 (defn -post-init [#^JPanel p]
-  (let [rand-saying (next-say)
-        editor-pane-with-text (JEditorPane. "text/html" rand-saying )
+  (let [editor-pane-with-text (JEditorPane. "text/html" (next-say))
         scroll-pane (JScrollPane. editor-pane-with-text)
         next-saying (JButton. "Next saying")
+        
+        next-saying-action (proxy [ActionListener] []
+                             (actionPerformed [event] (.setText editor-pane-with-text (next-say))))
         ]
-
+    (.addActionListener next-saying next-saying-action)
     (doto scroll-pane
       (.setVerticalScrollBarPolicy JScrollPane/VERTICAL_SCROLLBAR_AS_NEEDED)
-      (.setPreferredSize (Dimension. 250 145))
-      (.setMinimumSize (Dimension. 100 100)))
+      (.setPreferredSize (Dimension. 250 250))
+      (.setMinimumSize (Dimension. 250 250)))
     (.add p scroll-pane)
-    (.addActionListener next-saying next-saying-action)
     (.add p next-saying)
-   ))
+    )
+  
 
+;;;;; Als tool verwenden von Stu Sierra
+
+  (defmacro on-action [component event & body]
+    `(. ~component addActionListener
+        (proxy [java.awt.event.ActionListener] []
+          (actionPerformed [~event] ~@body))))
+)

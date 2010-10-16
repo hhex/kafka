@@ -3,7 +3,9 @@
   :url "http://lisp.chack-tec.com"
   :dependencies [[org.clojure/clojure "1.2.0"]
                  ]
-  :dev-dependencies [[swank-clojure "1.2.1"]]
+  :dev-dependencies [[swank-clojure "1.2.1"]
+                     ]
+  ;; [mycroft/mycroft "0.0.2"]
   ;; These namespaces will be AOT-compiled. Needed for gen-class and
   ;; other Java interop functionality. :namespaces is an alias for this.
   :aot [kafka.applet]
