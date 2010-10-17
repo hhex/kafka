@@ -8,7 +8,7 @@ Embed the applet into your website as shown with the applet.html
 
 ## Installation
 
-No special installation required
+You have to build the uberjar yourself using: lein uberjar.
 
 ## License
 
