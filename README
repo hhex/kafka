@@ -1,17 +1,17 @@
 # kafka
 
-FIXME: write description
+This sample applet displays sayings of Karl Kraus in German
 
 ## Usage
 
-FIXME: write
+Embed the applet into your website as shown with the applet.html
 
 ## Installation
 
-FIXME: write
+No special installation required
 
 ## License
 
-Copyright (C) 2010 FIXME
+Copyright (C) 2010 Heinz R. Hopfgartner
 
 Distributed under the Eclipse Public License, the same as Clojure.
